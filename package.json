@@ -1,0 +1,14 @@
+{
+	"name": "nodebb-plugin-mega-knights-usertitle",
+	"version": "0.0.1",
+	"description": "Pick userTitle with maximum rank (Лидер > Глав* > Офицер > Рекрутер > Рыцар* > Соратник), also this plugin perfomrs transformation of groupNames on the Profile page (e.g. Офицеры APB > Офицер APB, Рыцари GTA > Рыцарь GTA)",
+	"main": "library.js",
+	"nbbpm": {
+		"compatibility": "^0.6.0"
+	},
+	"readme": "ERROR: No README data found!",
+	"scripts": {},
+	"dependencies": {
+		"lodash": "^2.4.1"
+	}
+}
