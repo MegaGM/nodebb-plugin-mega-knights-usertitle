@@ -1,0 +1,3 @@
+/var/www/knights.pro/node_modules/nodebb-plugin-mega-knights-usertitle/library.js
+/var/www/knights.pro/node_modules/nodebb-plugin-mega-knights-usertitle/client/js/registerHelpers.js
+/var/www/knights.pro/node_modules/nodebb-plugin-mega-teamspeak/config.json
