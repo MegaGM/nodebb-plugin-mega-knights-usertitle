@@ -4,12 +4,14 @@
 	"library": "./library.js",
 	"hooks": [
 		{ "hook": "static:app.load", "method": "init" },
-		{ "hook": "filter:user.account", "method": "transform" }
+		{ "hook": "filter:user.account", "method": "changeName" },
+		{ "hook": "filter:admin.header.build", "method": "admin" }
 	],
 	"scripts": [
 		"client/js/registerHelpers.js"
 	],
 	"staticDirs": {
 		"js": "client/js"
-	}
+	},
+	"templates": "./templates"
 }

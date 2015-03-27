@@ -1,31 +1,76 @@
 $(document).on('ready', function (e) {
 	require(['plugins/nodebb-plugin-mega-knights-usertitle/js/vendor/lodash.min'], function (_) {
+
+		var leader = /лидер/gi,
+			foreman = /глав/gi,
+			officer = /офицер/gi,
+			recruiter = /рекрутер/gi,
+			knight = /рыцар/gi,
+			friend = /соратник/gi,
+			guest = 'Горожанин';
+
+		var apb = /APB/g,
+			gta = /GTA/g;
+
+		function getWeight (name) {
+			if (name.match(leader)) return 100;
+			if (name.match(foreman)) return 75;
+			if (name.match(officer)) return 60;
+			if (name.match(recruiter)) return 55;
+			if (name.match(knight)) return 50;
+			if (name.match(friend)) return 45;
+			if (name.match(guest)) return 0;
+			return 0;
+		}
+
+		function sortGroups (groups) {
+			return _(groups)
+				.map(function (group) {
+					group.weight = getWeight(group.name);
+					return group;
+				})
+				.sortByOrder(['weight', 'name'], [false, true])
+				.value();
+		}
+
+		function wrap (group) {
+			if (void 0 == group) return '';
+			var g = group,
+				gName = g.userTitle || g.name,
+				gIcon = g.icon !== '' ? '<i class="fa ' + g.icon + '"></i> ' : '' ;
+
+			var wrapper = '<a href="/groups/%slug%"><span class="label group-label inline-block" style="color: %labelColor%;">%icon%%userTitle%</span></a>'
+				.replace(/%slug%/, g.slug)
+				.replace(/%labelColor%/, g.labelColor)
+				.replace(/%icon%/, gIcon)
+				.replace(/%userTitle%/, gName);
+
+			return wrapper;
+		}
+
+		templates.registerHelper('pickUserGroups', function (groups) {
+			if (_.isEmpty(groups)) return guest;
+
+			var apbGroups = [], gtaGroups = [], otherGroups = [];
+			groups = sortGroups(groups);
+
+			_.forEach(groups, function (group) {
+				console.log('which group: ', group);
+				if (group.name.match(apb)) apbGroups.push(group);
+				else if (group.name.match(gta)) gtaGroups.push(group);
+				else otherGroups.push(group);
+			});
+
+			return wrap(_.first(otherGroups))
+				+ wrap(_.first(apbGroups))
+				+ wrap(_.first(gtaGroups));
+		});
+
 		templates.registerHelper('pickUserTitle', function (data) {
 			var groups = data.user.groups,
 				matched;
 
-			var leader = /лидер/gi,
-				foreman = /глав/gi,
-				officer = /офицер/gi,
-				recruiter = /рекрутер/gi,
-				knight = /рыцар/gi,
-				friend = /соратник/gi,
-				guest = 'Горожанин';
-
 			if (_.isEmpty(groups)) return guest;
-
-			function wrap (matched) {
-				var g = _.find(groups, {'name': matched}),
-					gName = g.userTitle || g.name,
-					gIcon = g.icon !== '' ? '<i class="fa ' + g.icon + '"></i> ' : '' ;
-
-				var wrapper = '<a href="/groups"><span class="label group-label inline-block" style="color: %labelColor%;">%icon%%userTitle%</span></a><br />'
-					.replace(/%labelColor%/, g.labelColor)
-					.replace(/%icon%/, gIcon)
-					.replace(/%userTitle%/, gName);
-
-				return wrapper;
-			}
 
 			if (_.any(groups, function (group) {
 				if (group.name.match(leader)) {
@@ -33,7 +78,7 @@ $(document).on('ready', function (e) {
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(matched); }
+			})) { return wrap(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(foreman)) {
@@ -41,7 +86,7 @@ $(document).on('ready', function (e) {
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(matched); }
+			})) { return wrap(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(officer)) {
@@ -49,7 +94,7 @@ $(document).on('ready', function (e) {
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(matched); }
+			})) { return wrap(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(recruiter)) {
@@ -57,7 +102,7 @@ $(document).on('ready', function (e) {
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(matched); }
+			})) { return wrap(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(knight)) {
@@ -65,7 +110,7 @@ $(document).on('ready', function (e) {
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(matched); }
+			})) { return wrap(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(friend)) {
@@ -73,7 +118,7 @@ $(document).on('ready', function (e) {
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(matched); }
+			})) { return wrap(_.find(groups, {'name': matched})); }
 
 			else { return guest; }
 
