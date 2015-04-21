@@ -3,6 +3,30 @@
 		_ = require('lodash'),
 		templates = require.main.require('templates.js');
 
+	/**
+	 * Change groups' titles to delete *APB* or *GTA* from them
+	 * on account.tpl
+	 */
+	Plugin.changeName = function (data, callback) {
+		if (data.userData.groups && !_.isEmpty(data.userData.groups)) {
+			data.userData.groups.forEach(function (group) {
+				group.userTitle = group.name
+					.replace(/Лидеры/i, 'Лидер')
+					.replace(/Главы/i, 'Глава')
+					.replace(/Офицеры/i, 'Офицер')
+					.replace(/Рекрутеры/i, 'Рекрутер')
+					.replace(/Рыцари/i, 'Рыцарь')
+					.replace(/Соратники/i, 'Соратник');
+			});
+		}
+
+		callback(null, data);
+	};
+
+
+	/**
+	 * Prepare for pickUserTitle and pickUserGroups
+	 */
 	var leader = /лидер/gi,
 		foreman = /глав/gi,
 		officer = /офицер/gi,
@@ -35,13 +59,13 @@
 			.value();
 	}
 
-	function wrap (group) {
+	function wrapUserTitle (group) {
 		if (void 0 == group) return '';
 		var g = group,
 			gName = g.userTitle || g.name,
 			gIcon = g.icon !== '' ? '<i class="fa ' + g.icon + '"></i> ' : '' ;
 
-		var wrapper = '<a href="/groups/%slug%"><span class="label group-label inline-block" style="color: %labelColor%;">%icon%%userTitle%</span></a>'
+		var wrapper = '<a href="/groups/%slug%"><span class="label group-label inline-block" style="background-color: %labelColor%;">%icon%%userTitle%</span></a>'
 			.replace(/%slug%/, g.slug)
 			.replace(/%labelColor%/, g.labelColor)
 			.replace(/%icon%/, gIcon)
@@ -50,29 +74,36 @@
 		return wrapper;
 	}
 
-	Plugin.changeName = function (data, callback) {
-		if (data.userData.groups && !_.isEmpty(data.userData.groups)) {
-			data.userData.groups.forEach(function (group) {
-				group.userTitle = group.name
-					.replace(/Лидеры/i, 'Лидер')
-					.replace(/Главы/i, 'Глава')
-					.replace(/Офицеры/i, 'Офицер')
-					.replace(/Рекрутеры/i, 'Рекрутер')
-					.replace(/Рыцари/i, 'Рыцарь')
-					.replace(/Соратники/i, 'Соратник');
-			});
-		}
+	function wrapUserGroups (group) {
+		if (void 0 == group) return '';
+		var g = group,
+			gName = g.userTitle || g.name,
+			gIcon = g.icon !== '' ? '<i class="fa ' + g.icon + '"></i> ' : '' ;
 
-		callback(null, data);
-	};
+		var wrapper = '<a href="/groups/%slug%"><span class="label group-label inline-block" style="font-size: 115%; color: %labelColor%;">%icon%%userTitle%</span></a>'
+			.replace(/%slug%/, g.slug)
+			.replace(/%labelColor%/, g.labelColor)
+			.replace(/%icon%/, gIcon)
+			.replace(/%userTitle%/, gName);
+
+		return wrapper;
+	}
+
 
 	Plugin.init = function (params, callback) {
+		/**
+		 * Register plugin in ACP
+		 */
 		function renderAdmin (req, res, next) {
 			res.render('admin/plugins/usertitle', {em: 'net'});
 		}
 		params.router.get('/admin/plugins/usertitle', params.middleware.admin.buildHeader, renderAdmin);
 		params.router.get('/api/admin/plugins/usertitle', renderAdmin);
 
+
+		/**
+		 * Register helpers
+		 */
 		templates.registerHelper('pickUserGroups', function (groups) {
 			if (_.isEmpty(groups)) return guest;
 
@@ -85,9 +116,9 @@
 				else otherGroups.push(group);
 			});
 
-			return wrap(_.first(otherGroups))
-				+ wrap(_.first(apbGroups))
-				+ wrap(_.first(gtaGroups));
+			return wrapUserGroups(_.first(otherGroups))
+				+ wrapUserGroups(_.first(apbGroups))
+				+ wrapUserGroups(_.first(gtaGroups));
 		});
 
 		templates.registerHelper('pickUserTitle', function (data) {
@@ -102,7 +133,7 @@
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(_.find(groups, {'name': matched})); }
+			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(foreman)) {
@@ -110,7 +141,7 @@
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(_.find(groups, {'name': matched})); }
+			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(officer)) {
@@ -118,7 +149,7 @@
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(_.find(groups, {'name': matched})); }
+			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(recruiter)) {
@@ -126,7 +157,7 @@
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(_.find(groups, {'name': matched})); }
+			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(knight)) {
@@ -134,7 +165,7 @@
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(_.find(groups, {'name': matched})); }
+			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
 			else if (_.any(groups, function (group) {
 				if (group.name.match(friend)) {
@@ -142,7 +173,7 @@
 					return group.userTitleEnabled;
 				}
 				return false;
-			})) { return wrap(_.find(groups, {'name': matched})); }
+			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
 			else { return guest; }
 
