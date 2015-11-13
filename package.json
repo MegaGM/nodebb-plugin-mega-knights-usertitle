@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-mega-knights-usertitle",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "nbbpm": {
     "compatibility": "^0.7.1 || ^0.8.0 || ^0.9.0"
   },
