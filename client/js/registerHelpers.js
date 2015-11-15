@@ -122,7 +122,7 @@ $(document).on('ready', function (e) {
 			if (_.any(groups, function (group) {
 				if (group.name.match(leader)) {
 					matched = group.name;
-					return group.userTitleEnabled;
+					return group.userTitle;
 				}
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
@@ -130,7 +130,7 @@ $(document).on('ready', function (e) {
 			else if (_.any(groups, function (group) {
 				if (group.name.match(foreman)) {
 					matched = group.name;
-					return group.userTitleEnabled;
+					return group.userTitle;
 				}
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
@@ -138,7 +138,7 @@ $(document).on('ready', function (e) {
 			else if (_.any(groups, function (group) {
 				if (group.name.match(officer)) {
 					matched = group.name;
-					return group.userTitleEnabled;
+					return group.userTitle;
 				}
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
@@ -146,7 +146,7 @@ $(document).on('ready', function (e) {
 			else if (_.any(groups, function (group) {
 				if (group.name.match(recruiter)) {
 					matched = group.name;
-					return group.userTitleEnabled;
+					return group.userTitle;
 				}
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
@@ -154,7 +154,7 @@ $(document).on('ready', function (e) {
 			else if (_.any(groups, function (group) {
 				if (group.name.match(knight)) {
 					matched = group.name;
-					return group.userTitleEnabled;
+					return group.userTitle;
 				}
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
@@ -162,7 +162,7 @@ $(document).on('ready', function (e) {
 			else if (_.any(groups, function (group) {
 				if (group.name.match(friend)) {
 					matched = group.name;
-					return group.userTitleEnabled;
+					return group.userTitle;
 				}
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
