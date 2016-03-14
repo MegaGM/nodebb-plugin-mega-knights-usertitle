@@ -1,14 +1,5 @@
 $(document).on('ready', function (e) {
 	require(['../../plugins/nodebb-plugin-mega-knights-usertitle/js/vendor/lodash.min'], function (_) {
-
-
-
-
-
-
-
-
-
 		/**
 		 * Prepare for pickUserTitle and pickUserGroups
 		 */
@@ -119,7 +110,7 @@ $(document).on('ready', function (e) {
 
 			if (_.isEmpty(groups)) return guest;
 
-			if (_.any(groups, function (group) {
+			if (_.some(groups, function (group) {
 				if (group.name.match(leader)) {
 					matched = group.name;
 					return group.userTitle;
@@ -127,7 +118,7 @@ $(document).on('ready', function (e) {
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(foreman)) {
 					matched = group.name;
 					return group.userTitle;
@@ -135,7 +126,7 @@ $(document).on('ready', function (e) {
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(officer)) {
 					matched = group.name;
 					return group.userTitle;
@@ -143,7 +134,7 @@ $(document).on('ready', function (e) {
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(recruiter)) {
 					matched = group.name;
 					return group.userTitle;
@@ -151,7 +142,7 @@ $(document).on('ready', function (e) {
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(knight)) {
 					matched = group.name;
 					return group.userTitle;
@@ -159,7 +150,7 @@ $(document).on('ready', function (e) {
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(friend)) {
 					matched = group.name;
 					return group.userTitle;

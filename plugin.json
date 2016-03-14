@@ -5,7 +5,8 @@
 	"hooks": [
 		{ "hook": "static:app.load", "method": "init" },
 		{ "hook": "filter:user.account", "method": "changeName" },
-		{ "hook": "filter:admin.header.build", "method": "admin" }
+		{ "hook": "filter:admin.header.build", "method": "admin" },
+		{ "hook": "filter:posts.modifyUserInfo", "method": "modifyUserInfo" }
 	],
 	"scripts": [
 		"client/js/registerHelpers.js"

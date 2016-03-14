@@ -1,7 +1,21 @@
 (function (module) {
 	var Plugin = {},
 		_ = require('lodash'),
+		groups = require.main.require('./src/groups'),
 		templates = require.main.require('templates.js');
+
+	/**
+	 * Modify of add some info to users' objects inside Posts array
+	 */
+	Plugin.modifyUserInfo = function (user, callback) {
+		groups.getUserGroups(user.uid, function (err, userGroups) {
+			if (!_.isEmpty(userGroups)) {
+				user.groups = userGroups[0];
+			}
+			callback(null, user);
+		});
+	};
+
 
 	/**
 	 * Change groups' titles to delete *APB* or *GTA* from them
@@ -144,7 +158,7 @@
 
 			if (_.isEmpty(groups)) return guest;
 
-			if (_.any(groups, function (group) {
+			if (_.some(groups, function (group) {
 				if (group.name.match(leader)) {
 					matched = group.name;
 					return group.userTitle;
@@ -152,7 +166,7 @@
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(foreman)) {
 					matched = group.name;
 					return group.userTitle;
@@ -160,7 +174,7 @@
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(officer)) {
 					matched = group.name;
 					return group.userTitle;
@@ -168,7 +182,7 @@
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(recruiter)) {
 					matched = group.name;
 					return group.userTitle;
@@ -176,7 +190,7 @@
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(knight)) {
 					matched = group.name;
 					return group.userTitle;
@@ -184,7 +198,7 @@
 				return false;
 			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
 
-			else if (_.any(groups, function (group) {
+			else if (_.some(groups, function (group) {
 				if (group.name.match(friend)) {
 					matched = group.name;
 					return group.userTitle;
