@@ -1,5 +1,5 @@
 $(document).on('ready', function (e) {
-	require(['../../plugins/nodebb-plugin-mega-knights-usertitle/js/vendor/lodash.min'], function (_) {
+	require(['../../plugins/nodebb-plugin-mega-knights-usertitle/lodash/lodash.min'], function (_) {
 		/**
 		 * Prepare for pickUserTitle and pickUserGroups
 		 */
@@ -28,10 +28,10 @@ $(document).on('ready', function (e) {
 		function sortGroups (groups) {
 			return _(groups)
 				.map(function (group) {
-					group.weight = getWeight(group.name);
+					group.weight = getWeight(group.slug);
 					return group;
 				})
-				.sortByOrder(['weight', 'name'], [false, true])
+				.orderBy(['weight', 'name'], ['desc', 'asc'])
 				.value();
 		}
 
@@ -112,61 +112,11 @@ $(document).on('ready', function (e) {
 		});
 
 		templates.registerHelper('pickUserTitle', function (data) {
-			var groups = data.user.groups,
-				matched;
+			var groups = data.user.groups;
 
-			if (_.isEmpty(groups)) return guest;
+			if (!groups || _.isEmpty(groups)) return guest;
 
-			if (_.some(groups, function (group) {
-				if (group.name.match(leader)) {
-					matched = group.name;
-					return group.userTitle;
-				}
-				return false;
-			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
-
-			else if (_.some(groups, function (group) {
-				if (group.name.match(foreman)) {
-					matched = group.name;
-					return group.userTitle;
-				}
-				return false;
-			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
-
-			else if (_.some(groups, function (group) {
-				if (group.name.match(officer)) {
-					matched = group.name;
-					return group.userTitle;
-				}
-				return false;
-			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
-
-			else if (_.some(groups, function (group) {
-				if (group.name.match(recruiter)) {
-					matched = group.name;
-					return group.userTitle;
-				}
-				return false;
-			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
-
-			else if (_.some(groups, function (group) {
-				if (group.name.match(knight)) {
-					matched = group.name;
-					return group.userTitle;
-				}
-				return false;
-			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
-
-			else if (_.some(groups, function (group) {
-				if (group.name.match(friend)) {
-					matched = group.name;
-					return group.userTitle;
-				}
-				return false;
-			})) { return wrapUserTitle(_.find(groups, {'name': matched})); }
-
-			else { return guest; }
-
+			return wrapUserTitle(sortGroups(groups)[0]);
 		});
 
 	});
