@@ -106,20 +106,24 @@
 		return wrapper;
 	}
 
-	function wrapUserGroups (group) {
-		if (void 0 == group) return '';
-		var g = group,
-			gName = g.userTitle || g.name,
-			gIcon = g.icon !== '' ? '<i class="fa ' + g.icon + '"></i> ' : '' ;
 
-		var wrapper = '<a href="/groups/%slug%"><span class="label group-label inline-block" style="font-size: 115%; color: %labelColor%;">%icon%%userTitle%</span></a>'
-			.replace(/%slug%/, g.slug)
-			.replace(/%labelColor%/, g.labelColor)
-			.replace(/%icon%/, gIcon)
-			.replace(/%userTitle%/, gName);
-
-		return wrapper;
-	}
+	/**
+	 * DEPRECATED or NOT IN USE YET
+	 */
+	// function wrapUserGroups (group) {
+	// 	if (void 0 == group) return '';
+	// 	var g = group,
+	// 		gName = g.userTitle || g.name,
+	// 		gIcon = g.icon !== '' ? '<i class="fa ' + g.icon + '"></i> ' : '' ;
+	//
+	// 	var wrapper = '<a href="/groups/%slug%"><span class="label group-label inline-block" style="font-size: 115%; color: %labelColor%;">%icon%%userTitle%</span></a>'
+	// 		.replace(/%slug%/, g.slug)
+	// 		.replace(/%labelColor%/, g.labelColor)
+	// 		.replace(/%icon%/, gIcon)
+	// 		.replace(/%userTitle%/, gName);
+	//
+	// 	return wrapper;
+	// }
 
 
 	Plugin.init = function (params, callback) {
@@ -146,22 +150,26 @@
 		// 	return user.userPostStyle = getPostUserStyle(_.first(sortGroups(user.groups)).name);
 		// });
 
-		templates.registerHelper('pickUserGroups', function (groups) {
-			if (_.isEmpty(groups)) return guest;
 
-			var apbGroups = [], gtaGroups = [], otherGroups = [];
-			groups = sortGroups(groups);
-
-			_.forEach(groups, function (group) {
-				if (group.name.match(apb)) apbGroups.push(group);
-				else if (group.name.match(gta)) gtaGroups.push(group);
-				else otherGroups.push(group);
-			});
-
-			return wrapUserGroups(_.first(otherGroups))
-				+ wrapUserGroups(_.first(apbGroups))
-				+ wrapUserGroups(_.first(gtaGroups));
-		});
+		/**
+		 * DEPRECATED or NOT IN USE YET
+		 */
+		// templates.registerHelper('pickUserGroups', function (groups) {
+		// 	if (_.isEmpty(groups)) return guest;
+		//
+		// 	var apbGroups = [], gtaGroups = [], otherGroups = [];
+		// 	groups = sortGroups(groups);
+		//
+		// 	_.forEach(groups, function (group) {
+		// 		if (group.name.match(apb)) apbGroups.push(group);
+		// 		else if (group.name.match(gta)) gtaGroups.push(group);
+		// 		else otherGroups.push(group);
+		// 	});
+		//
+		// 	return wrapUserGroups(_.first(otherGroups))
+		// 		+ wrapUserGroups(_.first(apbGroups))
+		// 		+ wrapUserGroups(_.first(gtaGroups));
+		// });
 
 		templates.registerHelper('pickUserTitle', function (data) {
 			var groups = data.user.groups;
