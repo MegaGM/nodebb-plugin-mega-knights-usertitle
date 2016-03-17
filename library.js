@@ -26,18 +26,21 @@
 	 * on account.tpl
 	 */
 	// Plugin.changeName = function (data, callback) {
-	// 	if (data.userData.groups && !_.isEmpty(data.userData.groups)) {
-	// 		data.userData.groups.forEach(function (group) {
-	// 			group.userTitle = group.name
-	// 				.replace(/Лидеры/i, 'Лидер')
-	// 				.replace(/Главы/i, 'Глава')
-	// 				.replace(/Офицеры/i, 'Офицер')
-	// 				.replace(/Рекрутеры/i, 'Рекрутер')
-	// 				.replace(/Рыцари/i, 'Рыцарь')
-	// 				.replace(/Соратники/i, 'Соратник');
-	// 		});
-	// 	}
+	// 	var groups = data.userData.groups;
 	//
+	// 	if (!groups || _.isEmpty(groups)) return guest;
+	//
+	// 	groups.forEach(function (group) {
+	// 		group.userTitle = group.name
+	// 			.replace(/Лидеры/i, 'Лидер')
+	// 			.replace(/Главы/i, 'Глава')
+	// 			.replace(/Офицеры/i, 'Офицер')
+	// 			.replace(/Рекрутеры/i, 'Рекрутер')
+	// 			.replace(/Рыцари/i, 'Рыцарь')
+	// 			.replace(/Соратники/i, 'Соратник');
+	// 	});
+	//
+	// 	data.userData.groups = groups;
 	// 	callback(null, data);
 	// };
 
@@ -172,7 +175,7 @@
 		// });
 
 		templates.registerHelper('pickUserTitle', function (data) {
-			var groups = data.user.groups;
+			var groups = data.user.groups || data.userData.groups;
 
 			if (!groups || _.isEmpty(groups)) return guest;
 
