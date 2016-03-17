@@ -9,7 +9,8 @@
 	 * Modify of add some info to users' objects inside Posts array
 	 */
 	Plugin.modifyUserInfo = function (user, callback) {
-		groups.getUserGroups(user.uid, function (err, userGroups) {
+		user.uid = parseInt(user.uid, 10);
+		groups.getUserGroups([user.uid], function (err, userGroups) {
 			if (!err && userGroups && !_.isEmpty(userGroups)) {
 				user.groups = userGroups[0];
 			} else {
