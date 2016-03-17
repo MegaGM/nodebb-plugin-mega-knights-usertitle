@@ -118,8 +118,9 @@ $(document).on('ready', function (e) {
 		// 		+ wrapUserGroups(_.first(gtaGroups));
 		// });
 
+
 		templates.registerHelper('pickUserTitle', function (data) {
-			var groups = data.user.groups;
+			var groups = data.user.groups || data.userData.groups;
 
 			if (!groups || _.isEmpty(groups)) return guest;
 
