@@ -1,5 +1,5 @@
 $(document).on('ready', function (e) {
-	require(['../../plugins/nodebb-plugin-mega-knights-usertitle/lodash/lodash.min'], function (_) {
+	require(['../../plugins/nodebb-plugin-mega-knights-usertitle/js/lodash.min'], function (_) {
 		/**
 		 * Prepare for pickUserTitle and pickUserGroups
 		 */
