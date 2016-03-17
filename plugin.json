@@ -11,7 +11,7 @@
 		"client/js/registerHelpers.js"
 	],
 	"staticDirs": {
-		"lodash": "node_modules/lodash"
+		"js": "client/js"
 	},
 	"templates": "./templates"
 }
