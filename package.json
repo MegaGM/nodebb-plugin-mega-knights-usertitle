@@ -1,22 +1,22 @@
 {
-	"name": "nodebb-plugin-mega-knights-usertitle",
-	"version": "1.1.0",
-	"nbbpm": {
-		"compatibility": "^1.0.0"
-	},
-	"description": "Pick userTitle with maximum rank (Лидер > Глав* > Офицер > Рекрутер > Рыцар* > Соратник)",
-	"main": "library.js",
-	"readme": "README.md",
-	"scripts": {},
-	"gitHead": "48d51764a1d47edd5514d5eec7915bcc2b1e7bcc",
-	"_id": "nodebb-plugin-mega-knights-usertitle@0.1.1",
-	"_shasum": "242c85f426347039382ea7757ea82e58de470219",
-	"_from": "nodebb-plugin-mega-knights-usertitle@*",
-	"dependencies": {
-		"nodebb-plugin-frontend-lodash": "^0",
-		"lodash": "^4"
-	},
-	"peerDependencies": {
-		"nodebb-plugin-frontend-lodash": "^0"
-	}
+  "name": "nodebb-plugin-mega-knights-usertitle",
+  "version": "1.1.1",
+  "nbbpm": {
+    "compatibility": "^1.0.0"
+  },
+  "description": "Pick userTitle with maximum rank (Лидер > Глав* > Офицер > Рекрутер > Рыцар* > Соратник)",
+  "main": "library.js",
+  "readme": "README.md",
+  "scripts": {},
+  "gitHead": "48d51764a1d47edd5514d5eec7915bcc2b1e7bcc",
+  "_id": "nodebb-plugin-mega-knights-usertitle@0.1.1",
+  "_shasum": "242c85f426347039382ea7757ea82e58de470219",
+  "_from": "nodebb-plugin-mega-knights-usertitle@*",
+  "dependencies": {
+    "nodebb-plugin-frontend-lodash": "^0",
+    "lodash": "^4"
+  },
+  "peerDependencies": {
+    "nodebb-plugin-frontend-lodash": "^0"
+  }
 }
